@@ -11,7 +11,8 @@ export const UISelector = Object.freeze({
     tieuDe1: document.getElementById('tieuDe1'),
     noiDung1: document.getElementById('noiDung1'),
     save1: document.getElementById('save1'),
-    delete1: document.getElementById('delete1')
+    delete1: document.getElementById('delete1'),
+    getData: document.getElementById('getData')
 
 })
 

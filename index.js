@@ -1,6 +1,6 @@
 import { colorArray } from "./utils/colorArray.js"
 import { UISelector } from "./utils/UISelector.js"
-
+import { add, getAllData, dataFirestore, updateData, remove } from "./firestore.js"
 
 
 
@@ -10,12 +10,24 @@ let contentmini = "";
 let array = []
 let newArray = []
 let color = "";
-const colorMain = "";
+let colorMain = "";
+UISelector.getData.onclick = () => {
+    UISelector.content1.innerHTML = "";
+    getAllData().then(() => {
+        array = dataFirestore();
+        addCard();
+        console.log(array);
 
+
+    });
+
+
+}
 
 UISelector.new1.onclick = function () {
+
     UISelector.content3.style.display = "flex";
-    color = colorArray[Math.floor(Math.random() * 20)];
+    colorMain = colorArray[Math.floor(Math.random() * 20)];
 }
 UISelector.tieuDe.onchange = function (e) {
     title = e.target.value;
@@ -41,9 +53,10 @@ UISelector.save.onclick = function () {
             let obj = {
                 tieuDe: title,
                 noiDung: contentmini,
-                colorMain: color
+                color: colorMain
             };
             array.push(obj);
+            add(title, contentmini, colorMain);
             addCard();
         }
         title = "";
@@ -51,6 +64,8 @@ UISelector.save.onclick = function () {
         UISelector.tieuDe.value = "";
         UISelector.noiDung.value = "";
         console.log(array);
+
+
 
 
         UISelector.content3.style.display = "none";
@@ -62,25 +77,30 @@ UISelector.save.onclick = function () {
 
 };
 
+export function getArray() {
+    return array;
+}
+
 function addCard() {
     array.forEach((item) => {
         let newCard = document.createElement('div');
         newCard.classList.add('card');
-        newCard.style.backgroundColor = item.colorMain;
+        newCard.style.backgroundColor = item.color;
         newCard.innerHTML = item.tieuDe;
         newCard.setAttribute('id', item.tieuDe);
-        content1.appendChild(newCard);
+        UISelector.content1.appendChild(newCard);
         newCard.ondblclick = function () {
             UISelector.content4.style.display = "flex";
             tieuDe1.value = item.tieuDe;
             noiDung1.value = item.noiDung;
             save1.onclick = function () {
 
-                content1.innerHTML = "";
+                UISelector.content1.innerHTML = "";
 
                 item.noiDung = noiDung1.value;
                 item.tieuDe = tieuDe1.value;
                 addCard();
+                updateData(item.tieuDe, item.noiDung, item.color);
 
                 console.log(array);
                 content4.style.display = "none";
@@ -91,6 +111,7 @@ function addCard() {
                     return newArray.tieuDe !== item.tieuDe;
 
                 })
+                remove(item.tieuDe);
                 content4.style.display = "none";
                 console.log(array);
                 newCard.remove();
@@ -112,7 +133,7 @@ search.onchange = function (e) {
         newArray.forEach((item) => {
             let newCard = document.createElement('div');
             newCard.classList.add('card');
-            newCard.style.backgroundColor = item.colorMain;
+            newCard.style.backgroundColor = item.color;
             newCard.innerHTML = item.tieuDe;
             newCard.setAttribute('id', item.tieuDe);
             content1.appendChild(newCard);
