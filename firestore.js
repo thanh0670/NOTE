@@ -27,13 +27,14 @@ import {
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBAYhaJF6vcK5HmlhkcZ_Z4k9arOGc2hbU",
-    authDomain: "card-game-92bf8.firebaseapp.com",
-    projectId: "card-game-92bf8",
-    storageBucket: "card-game-92bf8.appspot.com",
-    messagingSenderId: "53196426944",
-    appId: "1:53196426944:web:8389408b84f224021f2725"
+    apiKey: localVariable.APIKEY,
+    authDomain: localVariable.AUTHDOMAIN,
+    projectId: localVariable.PROJECTID,
+    storageBucket: localVariable.STORAGEBUCKET,
+    messagingSenderId: localVariable.MESSAGINGSENDERID,
+    appId: localVariable.APPID
 };
+
 
 
 
